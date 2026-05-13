@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
     if (req.method === 'GET') {
       const data = await collection.findOne({ name: 'global_stats' });
-      return res.status(200).json(data || { totalJoins: 1200 });
+      return res.status(200).json(data || { totalJoins: 2 });
     } 
     
     if (req.method === 'POST') {
