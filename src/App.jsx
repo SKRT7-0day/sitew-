@@ -21,9 +21,8 @@ function App() {
     ];
   });
 
-  const [joinCount, setJoinCount] = useState(() => {
-    const savedJoins = localStorage.getItem('total_joins_count');
-    return savedJoins ? parseInt(savedJoins) : 1200;
+  const [joinCount, setJoinCount] = useState(0);
+
   });
 
   useEffect(() => {
@@ -38,7 +37,15 @@ function App() {
     }
   }, [tags, joinCount, darkMode]);
 
-  const handleJoinClick = (tag) => {
+  useEffect(() => {
+    fetch('/api/stats').then(res => res.json()).then(data => {
+      setJoinCount(data.totalJoins || 0);
+    });
+  }, []);
+
+
+  const handleJoinClick = async (tag) => {
+await fetch('/api/stats', { method: 'POST' });
     setJoinCount(prev => prev + 1);
     window.open(`https://discord.gg/${tag}`, '_blank');
   };
